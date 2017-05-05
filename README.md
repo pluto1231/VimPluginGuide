@@ -63,3 +63,19 @@ And you will see the plugins listed in ~/.vimrc installed one by one
 `:PluginClean`
 
 And the plugin will be removed
+
+## [delimitMate](https://github.com/Raimondi/delimitMate)
+
+This plugin is extremely simple but hard to live without. It basically provides parenthesis auto completion, like "", {}, [], etc. If the user somehow typed both parenthesis, the plugin is smart enough to ignore the second one entered.
+
+Installation is also very simple and do not require much configuration:
+1. Add this line in the middle of your ~/.vimrc, where all the plugin goes
+
+`Plugin 'Raimondi/delimitMate'`
+
+2. Open vim and run the command to install plugin:
+
+`:PluginInstall` 
+
+That's it! Parenthesis whill now be auto completed.
+
