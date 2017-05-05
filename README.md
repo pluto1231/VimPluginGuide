@@ -79,3 +79,68 @@ Installation is also very simple and do not require much configuration:
 
 That's it! Parenthesis whill now be auto completed.
 
+## [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+
+As the official page said, this plugin is a "fast, as-you-type, fuzzy-search code completion engine". While powerful, it could take some work to install depending on your environment.
+
+1. First, the easy part, install via [Vundle](https://github.com/VundleVim/Vundle.vim/) by adding this line to ~/.vimrc
+
+`Plugin 'Valloric/YouCompleteMe'`
+
+2. This plugin has a requirement on Vim version, specifically it needs "Vim 7.4.143 with Python 2 or Python 3 support". If you have Ubuntu 14.10 and up simple update your vim using apt-get. If not you will need to re-compile vim:
+
+There's a pretty detailed guide on the [plugin page](https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source), below is a short summary:
+
+Install the following:
+
+```
+sudo apt-get install libncurses5-dev libgnome2-dev libgnomeui-dev \
+    libgtk2.0-dev libatk1.0-dev libbonoboui2-dev \
+    libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+    python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
+```
+
+(If you're on Ubuntu 16.04, use `liblua5.1-dev` instead of `lua5.1-dev`)
+
+Remove vim:
+
+`sudo apt-get remove vim vim-runtime gvim`
+
+(If you're on Ubuntu 12.04.2, you need to remove these in addition: `sudo apt-get remove vim-tiny vim-common vim-gui-common vim-nox`)
+
+Download and build vim from source:
+
+```
+cd ~
+git clone https://github.com/vim/vim.git
+cd vim
+./configure --with-features=huge \
+            --enable-multibyte \
+            --enable-rubyinterp=yes \
+            --enable-pythoninterp=yes \
+            --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
+            --enable-perlinterp=yes \
+            --enable-luainterp=yes \
+            --enable-gui=gtk2 --enable-cscope --prefix=/usr
+make VIMRUNTIMEDIR=/usr/share/vim/vim80
+```
+Note that you can only use either python2 or python 3, so ther original guide including both python 2 and python 3 as configure flags is wrong. Also the config directory might be different depending on your environment, my directory path did not match what's in the original guide. You can see a relative discussion [here](https://github.com/Valloric/YouCompleteMe/issues/1907)
+
+After compiling, you can install the newly compiled vim:
+
+`sudo make install`
+
+Opening up the vim should not give you a warning about YouCompleteMe
+
+3. You can now compile the compoments of YouCompleteMe, this example is for C language:
+
+```
+cd ~/.vim/bundle/YouCompleteMe
+./install.py --clang-completer
+```
+
+If you want to build for another language, please look at the [official guide](https://github.com/Valloric/YouCompleteMe/blob/master/README.md) and use the appropriate flags, alternatively you can just build for all languages by using the flag `--all`
+
+4. This plugin should work now, but if you do not like the default black on purple color scheme, you can change it by adding the following line on the top of your ~/.vimrc
+
+`highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000`
