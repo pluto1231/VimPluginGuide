@@ -144,3 +144,37 @@ If you want to build for another language, please look at the [official guide](h
 4. This plugin should work now, but if you do not like the default black on purple color scheme, you can change it by adding the following line on the top of your ~/.vimrc
 
 `highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000`
+
+## [ctags](http://ctags.sourceforge.net/)
+
+Ctags itself is a utility what will scan through the source code files in the assigned directory and create an index file of used objects. Vim can be configured to import this index file, and let the user easily trace function/variable definitions even if it's not in the currently opened file. This utility is installed seperately and do not require [Vundle]((https://github.com/VundleVim/Vundle.vim/).
+
+1. Install via package manager:
+
+`sudo apt-get install ctags`
+
+2. Create tag index file by going to the top directory of your project and run the following:
+
+`ctags -R .`
+
+By default this will create an index file at `./.tags` of all source code files in current directory and its sub directories. If you would like to specify the location of the tags, you can do:
+
+`ctags -R -f <path> .`
+
+If your project directory is git controlled, you might want to add tags files to your `.gitignore`
+
+3. You will need to point vim to the tag file you just created. If you used the default path for tag files, put the following line to your `~/.vimrc`
+
+`set tags=./tags;/`
+
+4. Open any file in your project directory, move your cursor to the variable/function, and press `CTRL+]` to move to the definition, and `Ctrl+t` to return to where you were. Note that if the same variable is defined in multiple places, there's no gurantee that ctags will find the correct definition.
+
+5. You can also search for a tag by typing the following:
+
+`:tag <function name>>`
+
+6. If you have cursor set to follow mouse click, which is done by adding the following in `~/.vimrc`
+
+`set mouse=a`
+
+You can then `Ctrl+LeftClick` on the function to show definition, `Ctrl+RightClick` to go back
